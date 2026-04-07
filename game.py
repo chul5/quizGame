@@ -49,3 +49,36 @@ class QuizGame:
         print("  5. 종료")
         print("========================================")
 
+    def run(self):
+        while True:
+            self.show_menu()
+
+            try:
+                choice = input("choice: ").strip()
+            except (KeyboardInterrupt, EOFError):
+                print("\n\nProgram EXIT")
+                break
+
+            if choice == "":
+                print("⚠️  입력이 없습니다. 1-5 사이의 숫자를 입력하세요.")
+                continue
+            elif not choice.isdigit():
+                print("⚠️  잘못된 입력입니다. 1-5 사이의 숫자를 입력하세요.")
+                continue
+            
+            choice = int(choice)
+
+            if choice == 1:
+                pass    # Step 7에서 구현
+            elif choice == 2:
+                pass    # Step 8에서 구현
+            elif choice == 3:
+                pass    # Step 9에서 구현
+            elif choice == 4:
+                pass    # Step 10에서 구현
+            elif choice == 5:
+                print("\n프로그램을 종료합니다. 👋")
+                break
+            else:
+                print("⚠️  잘못된 입력입니다. 1-5 사이의 숫자를 입력하세요.")
+    
