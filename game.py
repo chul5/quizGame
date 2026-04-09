@@ -71,7 +71,7 @@ class QuizGame:
             if choice == 1:
                 self.play()
             elif choice == 2:
-                pass    # Step 8에서 구현
+                self.add_quiz()
             elif choice == 3:
                 pass    # Step 9에서 구현
             elif choice == 4:
@@ -138,3 +138,42 @@ class QuizGame:
             self.best_score = percent
             print(f"🎉 새로운 최고 점수입니다!")
         print(f"========================================")
+
+    def add_quiz(self):
+        print("\n 새로운 퀴즈를 추가합니다.")
+
+        try:
+            question = input("문제를 입력하세요: ").strip()
+        except(KeyboardInterrupt, EOFError):
+            print("\n\n프로그램을 종료합니다.")
+            return None
+        
+        if question == "":
+            print("⚠️ 문제를 입력해야합니다.")
+            return
+        
+        choices = []
+        for i in range(1, 5):
+            try:
+                choice = input(f"선택지 {i}: ").strip()
+            except (KeyboardInterrupt, EOFError):
+                print("\n\n프로그램을 종료합니다.")
+                return None
+
+            if choice == "":
+                print("⚠️ 선택지를 입력해야 합니다.")
+                return
+            choices.append(choice)
+        
+        answer = self._get_number_input("정답 번호 (1-4): ", 1, 4)
+        if answer is None:
+            return
+        
+        new_quiz = Quiz(question, choices, answer)
+        self.quizzes.append(new_quiz)
+        self.save()
+
+        print("✅ QUIZ가 추가되었습니다.")
+
+    def save(self):
+        return
