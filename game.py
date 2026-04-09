@@ -69,7 +69,7 @@ class QuizGame:
             choice = int(choice)
 
             if choice == 1:
-                pass    # Step 7에서 구현
+                self.play()
             elif choice == 2:
                 pass    # Step 8에서 구현
             elif choice == 3:
@@ -82,3 +82,59 @@ class QuizGame:
             else:
                 print("⚠️  잘못된 입력입니다. 1-5 사이의 숫자를 입력하세요.")
     
+    def _get_number_input(self, prompt, min_val, max_val):
+        while True:
+            try:
+                value = input(prompt).strip()
+            except (KeyboardInterrupt, EOFError):
+                # print("\n\n입력을 중단합니다.")
+                return None
+
+            if value == "":
+                print(f"⚠️  입력이 없습니다. {min_val}-{max_val} 사이의 숫자를 입력하세요.")
+                continue
+            elif not value.isdigit():
+                print(f"⚠️  잘못된 입력입니다. {min_val}-{max_val} 사이의 숫자를 입력하세요.")
+                continue
+
+            value = int(value)
+
+            if value < min_val or value > max_val:
+                print(f"⚠️  {min_val}-{max_val} 사이의 숫자를 입력하세요.")
+                continue
+
+            return value
+        
+    def play(self):
+        if not self.quizzes:
+            print("\n⚠️  등록된 퀴즈가 없습니다.")
+            return
+
+        total = len(self.quizzes)
+        score = 0
+
+        print(f"\n START QUIZ! (TOTAL:{total})")
+        for i, quiz in enumerate(self.quizzes, start=1):
+            print(f"\n----------------------------------------")
+            print(f"[QUIZ {i}]")
+            quiz.display()
+
+            user_answer = self._get_number_input("Write Answer: ", 1, 4)
+            if user_answer is None:
+                print("\n퀴즈를 중단합니다.")
+                return
+            
+            if quiz.check(user_answer):
+                print("✅ 정답입니다!")
+                score += 1
+            else:
+                print(f"❌ 오답입니다. 정답은 {quiz.answer}번이에요.")
+            
+        percent = int(score / total * 100)
+        print(f"\n========================================")
+        print(f"🏆 결과: {total}문제 중 {score}문제 정답! ({percent}점)")
+
+        if percent > self.best_score:
+            self.best_score = percent
+            print(f"🎉 새로운 최고 점수입니다!")
+        print(f"========================================")
