@@ -154,7 +154,7 @@ class QuizGame:
         print(f"\n========================================")
         print(f"🏆 결과: {total}문제 중 {score}문제 정답! ({percent}점)")
 
-        if percent > self.best_score:
+        if self.best_score is None or percent > self.best_score:
             self.best_score = percent
             print(f"🎉 새로운 최고 점수입니다!")
             self.save()
