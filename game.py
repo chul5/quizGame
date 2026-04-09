@@ -5,7 +5,7 @@ from quiz import Quiz
 class QuizGame:
     def __init__(self):
         self.quizzes = []
-        self.best_score = 0
+        self.best_score = None
         self.load()
     
     def _get_default_quizzes(self):
