@@ -1,3 +1,2 @@
-__pycache__/    # Python이 자동 생성하는 캐시 폴더
-*.pyc           # 컴파일된 바이트코드 파일
-.DS_Store       # Mac이 자동 생성하는 메타데이터 파일
+# Python이 자동 생성하는 캐시 폴더
+__pycache__/
