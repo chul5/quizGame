@@ -1,3 +1,5 @@
+import json
+import os
 from quiz import Quiz
 
 class QuizGame:
@@ -36,7 +38,25 @@ class QuizGame:
         ]
     
     def load(self):
-        self.quizzes = self._get_default_quizzes()
+        if not os.path.exists("state.json"):
+            self.quizzes = self._get_default_quizzes()
+            print("state.json을 찾을 수 없습니다. 기본데이터를 불러옵니다.")
+            return
+        
+        try:
+            with open("state.json", "r", encoding="utf-8") as f:
+                data = json.load(f)
+
+                self.quizzes = [
+                    Quiz(q["question"], q["choices"], q["answer"])
+                    for q in data["quizzes"]
+                ]
+                self.best_score = data["best_score"]
+                print(f" 저장된 데이터를 불러왔습니다. Quiz {len(self.quizzes)}개, 최고점수 {self.best_score}")
+        except (json.JSONDecodeError, KeyError):
+            print("저장 파일이 손상되었습니다. 기본데이터를 불러옵니다.")
+            self.quizzes = self._get_default_quizzes()
+            self.best_score = None
 
     def show_menu(self):
         print("\n========================================")
@@ -176,8 +196,24 @@ class QuizGame:
         print("✅ QUIZ가 추가되었습니다.")
 
     def save(self):
-        return
-    
+        data = {
+            "quizzes" : [
+                {
+                    "question": quiz.question,
+                    "choices": quiz.choices,
+                    "answer": quiz.answer
+                }
+                for quiz in self.quizzes
+            ],
+            "best_score": self.best_score
+        }
+
+        try:
+            with open("state.json", "w", encoding="utf-8") as f:
+                json.dump(data, f, ensure_ascii=False, indent=4)
+        except OSError as e:
+            print(f"⚠️ 저장 중 오류 발생: {e}")
+
     def show_list(self):
         if not self.quizzes:
             print("\nThere are no quizzes")
@@ -191,7 +227,7 @@ class QuizGame:
         print("----------------------------------------")
 
     def show_score(self):
-        if self.best_score == 0:
+        if self.best_score is None:
             print("\n아직 퀴즈를 풀지 않았습니다.")
             return
         print(f"\n🏆 최고 점수: {self.best_score}점")
