@@ -157,6 +157,7 @@ class QuizGame:
         if percent > self.best_score:
             self.best_score = percent
             print(f"🎉 새로운 최고 점수입니다!")
+            self.save()
         print(f"========================================")
 
     def add_quiz(self):
