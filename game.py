@@ -75,7 +75,7 @@ class QuizGame:
             elif choice == 3:
                 self.show_list()
             elif choice == 4:
-                pass    # Step 10에서 구현
+                self.show_score()
             elif choice == 5:
                 print("\n프로그램을 종료합니다. 👋")
                 break
@@ -190,4 +190,9 @@ class QuizGame:
             print(f"[{i}] {quiz.question}")
         print("----------------------------------------")
 
-    def
+    def show_score(self):
+        if self.best_score == 0:
+            print("\n아직 퀴즈를 풀지 않았습니다.")
+            return
+        print(f"\n🏆 최고 점수: {self.best_score}점")
+
