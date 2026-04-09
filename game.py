@@ -73,7 +73,7 @@ class QuizGame:
             elif choice == 2:
                 self.add_quiz()
             elif choice == 3:
-                pass    # Step 9에서 구현
+                self.show_list()
             elif choice == 4:
                 pass    # Step 10에서 구현
             elif choice == 5:
@@ -177,3 +177,17 @@ class QuizGame:
 
     def save(self):
         return
+    
+    def show_list(self):
+        if not self.quizzes:
+            print("\nThere are no quizzes")
+            return
+        
+        print("----------------------------------------")
+        print(f"\n 등록된 퀴즈 목록 총 {len(self.quizzes)}개")
+
+        for i, quiz in enumerate(self.quizzes, start=1):
+            print(f"[{i}] {quiz.question}")
+        print("----------------------------------------")
+
+    def
